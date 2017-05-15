@@ -4,24 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-//class PickPlayer extends JPanel {
-//
-//    public PickPlayer() {
-//
-//    }
-//
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        Graphics2D g2d = (Graphics2D) g;
-//
-//        // prostokat
-//        g2d.drawRect(10, 10, 380, 380);
-//        // kolo
-//        g2d.drawOval(10, 10, 380, 380);
-//    }
-//}
-
 public class Main extends JFrame {
 
     private static final int SIZE = 512;
@@ -29,19 +11,13 @@ public class Main extends JFrame {
     private int player;
 
     /**
-     * Initializes JFrame
-     */
-    private Main() {
-        init();
-    }
-
-    /**
      * Create JFrame and runBoard it
      */
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             Main main = new Main();
-//            main.runWhoFirst();
+            main.init();
+            main.runWhoFirst();
             main.runBoard();
         });
     }
@@ -53,15 +29,22 @@ public class Main extends JFrame {
         setSize(SIZE, SIZE);
         setMinimumSize(new Dimension(SIZE, SIZE));
         setMaximumSize(new Dimension(SIZE, SIZE));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
         setTitle("Circle And Cross");
     }
 
+    /**
+     * Asks who should play first
+     */
     private void runWhoFirst() {
-        JPanel newPanel = new JPanel(new GridLayout(1, 2, GAP, GAP));
-        add(newPanel);
-        pack();
+        JFrame frame = new JFrame("Who first");
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        final JPanel panel = new JPanel(); // new GridLayout(1, 2, GAP, GAP)
+
+        Container container = frame.getContentPane();
+        container.setLayout(new FlowLayout());
+        container.add(panel);
 
         final JButton buttonX = new JButton("");
         buttonX.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -71,9 +54,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 player = 0;
-                remove(newPanel);
-//                newPanel.revalidate();
-//                newPanel.repaint();
+                frame.setVisible(false);
             }
         });
 
@@ -85,13 +66,16 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 player = 1;
-                remove(newPanel);
+                frame.setVisible(false);
             }
         });
 
-        newPanel.add(buttonO);
-        newPanel.add(buttonX);
+        panel.setLayout(new FlowLayout());
+        panel.add(buttonX);
+        panel.add(buttonO);
 
+        frame.pack();
+        frame.setVisible(true);
     }
 
     /**
@@ -185,5 +169,13 @@ public class Main extends JFrame {
 //            return componentMap.get(name);
 //        } else return null;
 //    }
+
+    private void showResults() {
+        if (player % 2 == 0) {
+            System.out.println("Now plays X");
+        } else {
+            System.out.println("Now plays O");
+        }
+    }
 
 }
