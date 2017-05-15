@@ -18,13 +18,13 @@ public class Main extends JFrame {
         results = new Results();
     }
 
-    /**
-     * Create JFrame and runBoard it
-     */
     public static void main(String[] args) {
         run();
     }
 
+    /**
+     * Create JFrame and runGame
+     */
     private static void run() {
         EventQueue.invokeLater(() -> {
             Main main = new Main();
