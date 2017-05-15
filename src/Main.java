@@ -41,6 +41,7 @@ public class Main extends JFrame {
         JFrame frame = new JFrame("Who first");
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         final JPanel panel = new JPanel(); // new GridLayout(1, 2, GAP, GAP)
+        panel.setLayout(new FlowLayout());
 
         Container container = frame.getContentPane();
         container.setLayout(new FlowLayout());
@@ -49,30 +50,28 @@ public class Main extends JFrame {
         final JButton buttonX = new JButton("");
         buttonX.setFont(new Font("Arial", Font.PLAIN, 20));
         buttonX.setText("Player X first");
-        add(buttonX);
+        panel.add(buttonX);
         buttonX.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 player = 0;
                 frame.setVisible(false);
+                setTitle("Now plays X");
             }
         });
 
         final JButton buttonO = new JButton("");
         buttonO.setFont(new Font("Arial", Font.PLAIN, 20));
         buttonO.setText("Player O first");
-        add(buttonO);
+        panel.add(buttonO);
         buttonO.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 player = 1;
                 frame.setVisible(false);
+                setTitle("Now plays O");
             }
         });
-
-        panel.setLayout(new FlowLayout());
-        panel.add(buttonX);
-        panel.add(buttonO);
 
         frame.pack();
         frame.setVisible(true);
@@ -82,6 +81,14 @@ public class Main extends JFrame {
      * Creates buttons and adds actions to them
      */
     private void runBoard() {
+//        JFrame frame = new JFrame("Game");
+//        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//        final JPanel panel = new JPanel();
+//
+//        Container container = frame.getContentPane();
+//        container.setLayout(new GridLayout(3, 3, GAP, GAP));
+//        container.add(panel);
+
         setLayout(new GridLayout(3, 3, GAP, GAP));
         for (int i = 0; i < 9; i++) {
             final JButton button = new JButton("");
@@ -108,12 +115,15 @@ public class Main extends JFrame {
 
     /**
      * Detects player and mark X or O on board
+     * And also informs who plays in the title of the frame
      */
     private void makeMove(JButton button) {
         if (player % 2 == 0) {
             button.setText("X");
+            setTitle("Now plays O");
         } else {
             button.setText("O");
+            setTitle("Now plays X");
         }
         button.setEnabled(false);
         player++;
@@ -169,13 +179,5 @@ public class Main extends JFrame {
 //            return componentMap.get(name);
 //        } else return null;
 //    }
-
-    private void showResults() {
-        if (player % 2 == 0) {
-            System.out.println("Now plays X");
-        } else {
-            System.out.println("Now plays O");
-        }
-    }
 
 }
