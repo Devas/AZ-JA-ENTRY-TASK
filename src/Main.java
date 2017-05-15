@@ -23,7 +23,7 @@ public class Main extends JFrame {
     }
 
     /**
-     * Create JFrame and runGame
+     * Create JFrame and runGame.
      */
     private static void run() {
         EventQueue.invokeLater(() -> {
